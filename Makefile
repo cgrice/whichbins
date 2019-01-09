@@ -10,5 +10,5 @@ clean:
 package:
 	$(eval VENV = $(shell pipenv --venv))
 	cd ${VENV}/lib/python3.7/site-packages && zip -r9 ${DELIVERABLE} ./*
-	zip -r9j ${DELIVERABLE} whichbins/*.py
+	zip -r9 ${DELIVERABLE} whichbins
 	zip -r9j ${DELIVERABLE} bins.json

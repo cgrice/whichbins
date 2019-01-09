@@ -12,17 +12,20 @@ def get_schedule():
 
     for collection in bins:
         schedule.add(collection['date'], collection['bins'])
+    
+    return schedule
 
 def lambda_handler(event, context):
     bins = []
     
     schedule = get_schedule()
     tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+
     collections = schedule.onDate(tomorrow.strftime("%Y-%m-%d"))
 
     if collections:
         message = bins_message(collections)
-        send_sms(message, "+0161555555")
+        send_sms(message, "+440000000000")
 
     return {
         "statusCode": 200,
