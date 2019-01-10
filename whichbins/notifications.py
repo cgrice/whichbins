@@ -1,21 +1,17 @@
 import os
+import json
+import boto3
 
-from twilio.rest import Client
+def send_sms(message):
+    queue_name = os.environ.get('NOTIFICATIONS_QUEUE', 'notifications-outbound')
+    sqs = boto3.resource('sqs')
+    queue = sqs.get_queue_by_name(QueueName=queue_name)
 
-def send_sms(message, recipient):
-    # Your Account Sid and Auth Token from twilio.com/console
-    account_sid = os.environ.get('TWILIO_ACCOUNT_SID', 'ACXXXXX')
-    auth_token = os.environ.get('TWILIO_AUTH_TOKEN', 'XXXXXX')
-    # Your messaging service Sid
-    service_sid = os.environ.get('TWILIO_MSGSERVICE_SID', 'MSGXXXXX')
-    # Your twilio phone number
-    sender = os.environ.get('TWILIO_SENDER', '+44000000')
-    
-    client = Client(account_sid, auth_token)
+    body = json.dumps({
+        "type": "notifications.send",
+        "medium": "sms",
+        "recipients": ["chris"],
+        "message": message,
+    })
+    response = queue.send_message(MessageBody=body)
 
-    message = client.messages.create(
-        body=message,
-        messaging_service_sid=service_sid,
-        from_=sender,
-        to=recipient
-    )

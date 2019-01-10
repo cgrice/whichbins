@@ -1,5 +1,6 @@
 import json
 import datetime
+import boto3
 
 from whichbins.schedule import Schedule
 from whichbins.notifications import send_sms
@@ -7,8 +8,12 @@ from whichbins.notifications import send_sms
 def get_schedule():
     schedule = Schedule()
 
-    with open('./bins.json') as binsData:
-        bins = json.loads(binsData.read())
+    bucket = os.environ.get("WHICHBINS_CONFIG_BUCKET", "whichbins-config")
+    key = os.environ.get("WHICHBINS_CONFIG_FILE", "bins.json")
+    s3 = boto3.resource("s3")
+    obj = s3.Object(bucket, key)
+    binsData = obj.get()["Body"].read().decode("utf-8")
+    bins = json.loads(config)
 
     for collection in bins:
         schedule.add(collection['date'], collection['bins'])
@@ -25,7 +30,7 @@ def lambda_handler(event, context):
 
     if collections:
         message = bins_message(collections)
-        send_sms(message, "+440000000000")
+        send_sms(message)
 
     return {
         "statusCode": 200,

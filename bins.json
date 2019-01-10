@@ -99,6 +99,15 @@
         }
     },
     {
+        "date": "2019-01-11",
+        "bins": {
+            "green": true,
+            "blue": false,
+            "black": true,
+            "brown": false
+        }
+    },
+    {
         "date": "2019-01-16",
         "bins": {
             "green": true,

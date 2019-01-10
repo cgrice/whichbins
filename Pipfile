@@ -10,5 +10,5 @@ nose = "*"
 python_version = "3.7"
 
 [packages]
-twilio = "*"
 python-dotenv = "*"
+"boto3" = "*"

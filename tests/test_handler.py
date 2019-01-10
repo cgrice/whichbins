@@ -45,5 +45,5 @@ def test_message_is_sent(send_sms, get_schedule):
     mockSchedule.add(tomorrow, { "black": True, "blue": False })
     get_schedule.return_value = mockSchedule
     lambda_handler(None, None)
-    send_sms.assert_called_with("It's bin night! Put these out: Black.", "+440000000000")
+    send_sms.assert_called_with("It's bin night! Put these out: Black.")
     
