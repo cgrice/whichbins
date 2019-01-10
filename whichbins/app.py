@@ -1,6 +1,7 @@
 import json
 import datetime
 import boto3
+import os
 
 from whichbins.schedule import Schedule
 from whichbins.notifications import send_sms
