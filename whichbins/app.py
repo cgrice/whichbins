@@ -13,7 +13,7 @@ def get_schedule():
     key = os.environ.get("WHICHBINS_CONFIG_FILE", "bins.json")
     s3 = boto3.resource("s3")
     obj = s3.Object(bucket, key)
-    binsData = obj.get()["Body"].read().decode("utf-8")
+    config = obj.get()["Body"].read().decode("utf-8")
     bins = json.loads(config)
 
     for collection in bins:
